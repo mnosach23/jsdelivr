@@ -1,7 +1,7 @@
 <template>
   <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="packages"
       sort-by="calories"
       class="result-table elevation-1"
   >
@@ -9,7 +9,7 @@
       <v-toolbar
           flat
       >
-        <v-toolbar-title>Список пакетов</v-toolbar-title>
+        <v-toolbar-title>Package List</v-toolbar-title>
         <v-divider
             class="mx-4"
             inset
@@ -22,58 +22,35 @@
         >
           <v-card>
             <v-card-title>
-              <span class="text-h5">Полная информация о пакете</span>
+              <span class="text-h5">Detailed Info</span>
             </v-card-title>
 
             <v-card-text>
               <v-container>
-                <v-row>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <p>
-                      {{ detailItem.name }}
-                    </p>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <p>
-                      {{ detailItem.calories }}
-                    </p>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <p>
-                      {{ detailItem.fat }}
-                    </p>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <p>
-                      {{ detailItem.carbs }}
-                    </p>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <p>
-                      {{ detailItem.protein }}
-                    </p>
-                  </v-col>
-                </v-row>
+                  <p>
+                    Name: {{ detailItem.name }}
+                  </p>
+                  <p>
+                    Description: {{ detailItem.description }}
+                  </p>
+                  <p>
+                    Main file: {{ detailItem.mainfile }}
+                  </p>
+                  <p>
+                    Last version: {{ detailItem.lastversion }}
+                  </p>
+                  <p>
+                    Homepage: {{ detailItem.homepage }}
+                  </p>
+                  <p>
+                    Github: {{ detailItem.github }}
+                  </p>
+                  <p>
+                    Versions: {{ detailItem.versions }}
+                  </p>
+                  <p>
+                    Author: {{ detailItem.author }}
+                  </p>
               </v-container>
             </v-card-text>
 
@@ -94,48 +71,55 @@
     <template v-slot:item="{ item }">
       <tr @click="showDetails(item)">
         <td>{{ item.name }}</td>
-        <td>{{ item.calories }}</td>
-        <td>{{ item.fat }}</td>
-        <td>{{ item.carbs }}</td>
-        <td>{{ item.protein }}</td>
+        <td>{{ item.mainfile }}</td>
+        <td>{{ item.lastversion }}</td>
+        <td>{{ item.homepage }}</td>
+        <td>{{ item.author }}</td>
       </tr>
     </template>
   </v-data-table>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: "ResultTable",
+
+  computed: {
+    ...mapGetters([
+      'packages',
+    ])
+  },
 
   data: () => ({
     dialog: false,
     headers: [
       {
-        text: 'Dessert (100g serving)',
+        text: 'Name',
         align: 'start',
         sortable: false,
         value: 'name',
       },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' }
+      { text: 'Main file', value: 'mainfile' },
+      { text: 'Last version', value: 'lastversion' },
+      { text: 'Homepage', value: 'homepage' },
+      { text: 'Author', value: 'author' }
     ],
-    desserts: [],
     detailIndex: -1,
     detailItem: {
       name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      mainfile: 0,
+      lastversion: 0,
+      homepage: 0,
+      author: 0,
     },
     defaultItem: {
       name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
+      mainfile: 0,
+      lastversion: 0,
+      homepage: 0,
+      author: 0,
     },
   }),
 
@@ -145,88 +129,9 @@ export default {
     },
   },
 
-  created () {
-    this.initialize()
-  },
-
   methods: {
-    initialize () {
-      this.desserts = [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-        },
-      ]
-    },
-
     showDetails (item) {
-      this.detailIndex = this.desserts.indexOf(item)
+      this.detailIndex = this.packages.indexOf(item)
       this.detailItem = Object.assign({}, item)
       this.dialog = true
     },

@@ -31,9 +31,6 @@ export default {
     ResultTable,
     Footer,
   },
-  data: () => ({
-    //
-  }),
 };
 </script>
 
@@ -41,6 +38,11 @@ export default {
 .jsdelivr-api {
   &__content {
     display: flex;
+
+    @media screen and (max-width: 1250px) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
 }
 </style>

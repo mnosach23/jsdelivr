@@ -37,12 +37,8 @@ export default {
 </script>
 
 <style lang="scss">
-.v-footer {
-  margin-top: 60px;
-}
-
 .v-application .teal {
-  background-color: #10B981 !important;
-  border-color: #10B981 !important;
+  background-color: #1976d2 !important;
+  border-color: #1976d2 !important;
 }
 </style>

@@ -1,13 +1,14 @@
 <template>
   <div class="user-inputs">
     <h2 class="user-inputs__title">
-      Cервис предоставляет доступ к https://jsdelivr.com по средствам API
+      The service provides access to https://jsdelivr.com
     </h2>
     <div class="user-inputs__input-wrapper">
-      <v-text-field variant="outlined" class="user-inputs__input" />
+      <v-text-field variant="outlined" class="user-inputs__input" v-model="searchText" />
       <v-btn
           class="user-inputs__button"
           color="#10B981"
+          @click="searchForPackage"
       >
         Let`s go
       </v-btn>
@@ -17,7 +18,15 @@
 
 <script>
 export default {
-  name: "UserInput"
+  name: "UserInput",
+  data: () => ({
+    searchText: null
+  }),
+  methods: {
+    searchForPackage () {
+      this.$store.dispatch('searchForPackage', this.searchText)
+    }
+  }
 }
 </script>
 
@@ -26,9 +35,8 @@ export default {
   margin-top: 12px;
   margin-left: 12px;
   padding: 32px 60px;
-  max-width: 500px;
+  max-width: 400px;
   border-radius: 32px;
-  background-image: url(../../public/input-background.png);
 
   &__title {
     text-align: center;

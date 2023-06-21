@@ -5,16 +5,24 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        // your data here
+        packages: []
     },
     mutations: {
-        // your mutation here
+        setPackage (state, packageData) {
+            state.packages = packageData;
+        }
     },
     actions: {
-        // your action here
+        searchForPackage ({ commit }, payload) {
+            fetch(`https://api.jsdelivr.com/v1/jsdelivr/libraries?name=${payload}*`)
+                .then(response => response.json())
+                .then(data => commit('setPackage', data))
+        }
     },
     getters: {
-        // your getters here
+        packages(state) {
+            return state.packages;
+        },
     }
 });
 
