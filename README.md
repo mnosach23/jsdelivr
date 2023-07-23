@@ -1,5 +1,3 @@
-# frozeneon
-
 ## Project setup
 ```
 npm install
